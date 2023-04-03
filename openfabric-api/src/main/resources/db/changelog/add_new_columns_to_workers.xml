@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+
+    <!-- ############################################################ -->
+    <!--  Add new columns for workers  -->
+    <!-- ############################################################ -->
+    <changeSet author="Adedamola" id="WO_05">
+        <addColumn tableName="worker">
+            <column name="command" type="VARCHAR(432)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="created" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="image" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="image_id" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="status" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="host_config" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="state" type="VARCHAR(255)"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="size_rw" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="worker">
+            <column name="size_root_fs" type="BIGINT"/>
+        </addColumn>
+        <addColumn tableName="port">
+            <column name="worker_id" type="${uuid_type}"/>
+        </addColumn>
+        <addColumn tableName="mount">
+            <column name="worker_id" type="${uuid_type}"/>
+        </addColumn>
+
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="worker"
+                                 constraintName="worker_fk_port"
+                                 referencedColumnNames="id" referencedTableName="worker"/>
+        <addForeignKeyConstraint baseColumnNames="id" baseTableName="worker"
+                                 constraintName="worker_fk_mount"
+                                 referencedColumnNames="id" referencedTableName="worker"/>
+    </changeSet>
+
+</databaseChangeLog>
+

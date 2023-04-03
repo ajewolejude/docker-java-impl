@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+
+    <!-- ############################################################ -->
+    <!--  Port, Host Config, Mount  -->
+    <!-- ############################################################ -->
+
+    <property name="uuid_type" value="CHAR(36)" dbms="postgresql"/>
+    <property name="uuid_type" value="uniqueidentifier" dbms="mssql"/>
+    <property name="uuid_type" value="RAW(16)" dbms="oracle"/>
+    <property name="uuid_function" value="uuid_generate_v4()" dbms="postgresql"/>
+    <property name="uuid_function" value="NEWID()" dbms="mssql"/>
+    <property name="uuid_function" value="sys_guid()" dbms="oracle"/>
+
+
+    <changeSet author="Adedamola" id="WO_02">
+        <createTable tableName="port">
+            <column name="id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ip" type="varchar(255)"/>
+            <column name="private_port" type="int"/>
+            <column name="public_port" type="int"/>
+            <column name="type" type="varchar(255)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet  author="Adedamola" id="WO_04">
+        <createTable tableName="mount">
+            <column name="id" type="${uuid_type}" defaultValueComputed="${uuid_function}">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="name" type="VARCHAR(255)"/>
+            <column name="source" type="VARCHAR(255)"/>
+            <column name="destination" type="VARCHAR(255)"/>
+            <column name="driver" type="VARCHAR(255)"/>
+            <column name="mode" type="VARCHAR(255)"/>
+            <column name="rw" type="BOOLEAN"/>
+            <column name="propagation" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
